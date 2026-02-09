@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": "documind-afda9",
+    "default": "intellibiz-agent",
     "DocuMind": "documind-afda9",
     "documind": "intellibiz-agent"
   },
