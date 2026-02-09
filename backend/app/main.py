@@ -1,9 +1,11 @@
 import os
+import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.api import upload, documents, metadata, charts, qa, debug
 
 app = FastAPI(title="InsightHub Backend")
+logger = logging.getLogger("insight-hub")
 
 def _get_allowed_origins():
     raw = os.getenv("ALLOWED_ORIGINS", "")
@@ -28,6 +30,11 @@ app.include_router(metadata.router)
 app.include_router(charts.router)
 app.include_router(qa.router)
 app.include_router(debug.router)
+
+@app.on_event("startup")
+def _log_startup():
+    port = os.getenv("PORT", "8000")
+    logger.info("Starting InsightHub Backend on port %s", port)
 
 @app.get("/")
 def health():
